@@ -946,3 +946,78 @@ document.addEventListener('DOMContentLoaded', () => {
     updateScrollProgress();
     heroLoop();
 });
+
+// ===== HEADING LETTER REVEAL V2 =====
+(function() {
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+
+      // Find section headings only — NOT hero/navbar
+      const headings = [];
+      document.querySelectorAll('h2').forEach(function(h) {
+        if (!h.closest('#hero, .hero-section, .hero-phase-1, nav, .navbar, #logo-intro-overlay')) {
+          headings.push(h);
+        }
+      });
+
+      headings.forEach(function(heading) {
+        if (heading.dataset.letterDone) return;
+        heading.dataset.letterDone = 'true';
+
+        const text = heading.innerText;
+
+        // SAFE: Start opacity 1 — always visible
+        heading.innerHTML = text.split('').map(function(char) {
+          if (char === ' ') {
+            return '<span style="display:inline-block;width:0.28em"> </span>';
+          }
+          return '<span class="eof-letter" style="display:inline-block;opacity:1;transform:translateY(0)">' + char + '</span>';
+        }).join('');
+      });
+
+      // Now observe — when visible, replay animation
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (!entry.isIntersecting) return;
+          
+          const heading = entry.target;
+          const letters = heading.querySelectorAll('.eof-letter');
+          
+          // First reset to hidden
+          letters.forEach(function(l) {
+            l.style.opacity = '0';
+            l.style.transform = 'translateY(35px)';
+          });
+
+          // Then animate in with stagger
+          if (typeof gsap !== 'undefined') {
+            gsap.to(letters, {
+              opacity: 1,
+              y: 0,
+              duration: 0.5,
+              stagger: 0.04,
+              ease: 'power3.out',
+              delay: 0.15
+            });
+          } else {
+            letters.forEach(function(letter, i) {
+              setTimeout(function() {
+                letter.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+                letter.style.opacity = '1';
+                letter.style.transform = 'translateY(0)';
+              }, 150 + (i * 50));
+            });
+          }
+
+          observer.unobserve(heading);
+        });
+      }, { threshold: 0.5 });
+
+      headings.forEach(function(h) {
+        if (h.dataset.letterDone) observer.observe(h);
+      });
+
+    }, 1500);
+  });
+})();
+// ===== END HEADING LETTER REVEAL V2 =====
