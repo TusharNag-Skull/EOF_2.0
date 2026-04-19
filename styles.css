@@ -2368,10 +2368,3 @@ body.intro-done > *:not(#logo-intro-overlay) {
     }
 }
 /* ===== END KHAALI HERO POSTER ===== */
-
-/* ===== LETTER REVEAL — SAFE ADD ONLY ===== */
-.eof-letter {
-  display: inline-block !important;
-  will-change: transform, opacity;
-}
-/* ===== END LETTER REVEAL ===== */
