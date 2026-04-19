@@ -946,3 +946,94 @@ document.addEventListener('DOMContentLoaded', () => {
     updateScrollProgress();
     heroLoop();
 });
+
+// ===== JUGNU / FIREFLIES =====
+(function() {
+
+  const overlay = document.getElementById('logo-intro-overlay');
+  const introBg = document.getElementById('intro-bg');
+  if (!overlay || !introBg) return;
+
+  const JUGNU_COUNT = window.innerWidth <= 768 ? 15 : 35;
+
+  const colors = [
+    'rgba(253,202,45,',   // gold
+    'rgba(249,184,1,',    // deep gold
+    'rgba(255,240,150,',  // warm white
+    'rgba(234,94,32,',    // amber orange
+  ];
+
+  function flyJugnu(el) {
+    if (typeof gsap === 'undefined') return;
+    gsap.to(el, {
+      x: (Math.random() - 0.5) * 150,
+      y: (Math.random() - 0.5) * 150,
+      opacity: Math.random() * 0.8 + 0.2,
+      duration: 3 + Math.random() * 5,
+      ease: 'sine.inOut',
+      onComplete: function() { flyJugnu(el); }
+    });
+  }
+
+  for (let i = 0; i < JUGNU_COUNT; i++) {
+    const jugnu = document.createElement('div');
+    jugnu.className = 'jugnu';
+
+    const x = Math.random() * 100;
+    const y = Math.random() * 100;
+    const size = 2 + Math.random() * 3;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const duration = 4 + Math.random() * 8;
+    const delay = Math.random() * 6;
+    const glowSize = 4 + Math.random() * 8;
+
+    jugnu.style.cssText = `
+      position: absolute;
+      left: ${x}%;
+      top: ${y}%;
+      width: ${size}px;
+      height: ${size}px;
+      border-radius: 50%;
+      background: ${color}0.9);
+      box-shadow: 
+        0 0 ${glowSize}px ${glowSize/2}px ${color}0.6),
+        0 0 ${glowSize*2}px ${glowSize}px ${color}0.3);
+      z-index: 2;
+      pointer-events: none;
+    `;
+
+    introBg.appendChild(jugnu);
+
+    if (typeof gsap !== 'undefined') {
+      // Entrance fade-in, then recursive random flight
+      gsap.fromTo(jugnu,
+        { opacity: 0, scale: 0 },
+        {
+          opacity: 0.8,
+          scale: 1,
+          duration: 1,
+          delay: delay,
+          ease: 'power2.out',
+          onComplete: function() { flyJugnu(jugnu); }
+        }
+      );
+
+      // Separate glow pulse
+      gsap.to(jugnu, {
+        boxShadow: `0 0 15px 8px ${color}0.9), 0 0 30px 15px ${color}0.4)`,
+        duration: 1.5 + Math.random(),
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut',
+        delay: delay
+      });
+    } else {
+      // Fallback — CSS keyframe animations
+      jugnu.style.animation =
+        `jugnuFloat ${duration}s ease-in-out ${delay}s infinite, ` +
+        `jugnuGlow ${2 + Math.random() * 2}s ease-in-out ${delay}s infinite`;
+    }
+  }
+
+})();
+// ===== END JUGNU =====

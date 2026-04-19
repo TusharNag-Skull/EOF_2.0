@@ -2368,3 +2368,67 @@ body.intro-done > *:not(#logo-intro-overlay) {
     }
 }
 /* ===== END KHAALI HERO POSTER ===== */
+
+/* ===== JUGNU FIREFLIES ===== */
+@keyframes jugnuFloat {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  25% {
+    transform: translate(
+      calc(var(--rx, 30px) * 1),
+      calc(var(--ry, -40px) * 1)
+    ) scale(1.1);
+  }
+  50% {
+    transform: translate(
+      calc(var(--rx, -25px) * 1.5),
+      calc(var(--ry, 35px) * 0.8)
+    ) scale(0.9);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translate(
+      calc(var(--rx, 20px) * 0.7),
+      calc(var(--ry, -20px) * 1.3)
+    ) scale(1.05);
+    opacity: 1;
+  }
+  85% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes jugnuGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 4px 2px rgba(253,202,45,0.3),
+      0 0 8px 4px rgba(253,202,45,0.15);
+    opacity: 0.4;
+  }
+  50% {
+    box-shadow:
+      0 0 12px 6px rgba(253,202,45,0.9),
+      0 0 24px 12px rgba(253,202,45,0.5),
+      0 0 40px 20px rgba(234,94,32,0.2);
+    opacity: 1;
+  }
+}
+
+.jugnu {
+  pointer-events: none !important;
+  z-index: 2 !important;
+}
+
+@media (max-width: 768px) {
+  /* Fewer jugnu on mobile for performance */
+}
+/* ===== END JUGNU FIREFLIES ===== */
