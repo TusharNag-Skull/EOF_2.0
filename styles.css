@@ -2347,3 +2347,24 @@ body.intro-done > *:not(#logo-intro-overlay) {
     }
 }
 /* ===== END MOBILE POLISH ===== */
+
+/* ===== KHAALI HERO POSTER — responsive ===== */
+/* Desktop — landscape poster */
+.khaali-slide {
+    background-image: url('Logo/pcdp1.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Mobile — portrait poster */
+@media (max-width: 768px) {
+    .khaali-slide {
+        background-image: url('Logo/mobiledp1.jpeg') !important;
+        background-size: cover !important;
+        background-position: center top !important;
+        background-repeat: no-repeat !important;
+        min-height: 100vh !important;
+    }
+}
+/* ===== END KHAALI HERO POSTER ===== */
