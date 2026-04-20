@@ -1,4 +1,6 @@
-﻿:root {
+﻿@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap');
+
+:root {
     --bg-1: #0D0C1A;
     --bg-2: #12112A;
     --bg-3: #1A1835;
@@ -1236,6 +1238,10 @@ h4 {
     position: relative;
     display: inline-block;
     padding-bottom: 0.3rem;
+    font-family: 'Noto Sans Devanagari',
+                 'Mangal',
+                 'Arial Unicode MS',
+                 serif !important;
 }
 
 .logo-kahaani-heading h2::after {
