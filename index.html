@@ -7,6 +7,10 @@
     <title>Evenly Odd Films - Stories that feel. Frames that stay.</title>
     <meta name="description"
         content="Evenly Odd Films creates cinematic experiences that resonate. From feature films to commercials, we craft stories that feel and frames that stay.">
+    <meta property="og:title" content="Evenly Odd Films - Stories that Feel">
+    <meta property="og:description" content="Crafting simple stories with a unique touch. Film production house based in Ahmedabad.">
+    <meta property="og:image" content="Logo/EOF Logo_colour_new.png">
+    <meta name="theme-color" content="#FDCA2D">
     <link rel="icon" type="image/png" href="Logo/EOF%20Logo_colour_new.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -155,52 +159,58 @@
                 </div>
             </div>
 
-            <div class="portfolio-grid commercials-grid portfolio-grid-hidden" data-grid="commercials">
-                <div class="portfolio-item reveal" data-category="commercial">
-                    <div class="portfolio-image">
-                        <span class="portfolio-badge badge-commercial">📢 Commercial</span>
-                        <img src="Logo/img3.png" alt="Kumar Jweller Commercial" class="portfolio-img">
-                        <div class="portfolio-overlay">
-                            <h3 class="portfolio-title">Kumar Jweller Commercial</h3>
-                            <button class="watch-btn" onclick="window.open('https://youtu.be/Mv0vymGS8Dk', '_blank')">&#9654; Watch</button>
+            <div class="portfolio-grid commercials-grid commercials-carousel-wrapper portfolio-grid-hidden" data-grid="commercials">
+                <div class="commercials-track" id="commercialsTrack">
+                    <div class="portfolio-item reveal" data-category="commercial">
+                        <div class="portfolio-image">
+                            <span class="portfolio-badge badge-commercial">📢 Commercial</span>
+                            <img src="Logo/img3.png" alt="Kumar Jweller Commercial" class="portfolio-img">
+                            <div class="portfolio-overlay">
+                                <h3 class="portfolio-title">Kumar Jweller Commercial</h3>
+                                <button class="watch-btn" onclick="window.open('https://youtu.be/Mv0vymGS8Dk', '_blank')">&#9654; Watch</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item reveal" data-category="music">
+                        <div class="portfolio-image">
+                            <span class="portfolio-badge badge-commercial">📢 Commercial</span>
+                            <img src="Logo/img5.png" alt="Demo Ad - Shoe Company" class="portfolio-img">
+                            <div class="portfolio-overlay">
+                                <h3 class="portfolio-title">Demo Ad - Shoe Company</h3>
+                                <button class="watch-btn" onclick="window.open('https://youtu.be/Mv0vymGS8Dk', '_blank')">&#9654; Watch</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item reveal" data-category="documentary">
+                        <div class="portfolio-image">
+                            <span class="portfolio-badge badge-commercial">📢 Commercial</span>
+                            <img src="Logo/img6.png" alt="EOF MEDIA AD-FILM" class="portfolio-img">
+                            <div class="portfolio-overlay">
+                                <h3 class="portfolio-title">EOF MEDIA AD-FILM</h3>
+                                <button class="watch-btn"
+                                    onclick="window.open('https://www.youtube.com/watch?v=baj_zmTc2Bo', '_blank')">&#9654; Watch</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item reveal" data-category="short">
+                        <div class="portfolio-image">
+                            <span class="portfolio-badge badge-commercial">📢 Commercial</span>
+                            <img src="Logo/img7.png" alt="Bazuki 360 Diffuser Relaxation Commercial" class="portfolio-img">
+                            <div class="portfolio-overlay">
+                                <h3 class="portfolio-title">Bazuki 360 Diffuser Relaxation Commercial</h3>
+                                <button class="watch-btn"
+                                    onclick="window.open('https://www.youtube.com/watch?v=iZsCDispZS4', '_blank')">&#9654; Watch</button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="portfolio-item reveal" data-category="music">
-                    <div class="portfolio-image">
-                        <span class="portfolio-badge badge-commercial">📢 Commercial</span>
-                        <img src="Logo/img5.png" alt="Demo Ad - Shoe Company" class="portfolio-img">
-                        <div class="portfolio-overlay">
-                            <h3 class="portfolio-title">Demo Ad - Shoe Company</h3>
-                            <button class="watch-btn" onclick="window.open('https://youtu.be/Mv0vymGS8Dk', '_blank')">&#9654; Watch</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="portfolio-item reveal" data-category="documentary">
-                    <div class="portfolio-image">
-                        <span class="portfolio-badge badge-commercial">📢 Commercial</span>
-                        <img src="Logo/img6.png" alt="EOF MEDIA AD-FILM" class="portfolio-img">
-                        <div class="portfolio-overlay">
-                            <h3 class="portfolio-title">EOF MEDIA AD-FILM</h3>
-                            <button class="watch-btn"
-                                onclick="window.open('https://www.youtube.com/watch?v=baj_zmTc2Bo', '_blank')">&#9654; Watch</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="portfolio-item reveal" data-category="short">
-                    <div class="portfolio-image">
-                        <span class="portfolio-badge badge-commercial">📢 Commercial</span>
-                        <img src="Logo/img7.png" alt="Bazuki 360 Diffuser Relaxation Commercial" class="portfolio-img">
-                        <div class="portfolio-overlay">
-                            <h3 class="portfolio-title">Bazuki 360 Diffuser Relaxation Commercial</h3>
-                            <button class="watch-btn"
-                                onclick="window.open('https://www.youtube.com/watch?v=iZsCDispZS4', '_blank')">&#9654; Watch</button>
-                        </div>
-                    </div>
-                </div>
+                <button class="carousel-prev" id="commPrev" type="button" aria-label="Previous commercials">&#8592;</button>
+                <button class="carousel-next" id="commNext" type="button" aria-label="Next commercials">&#8594;</button>
+                <div class="carousel-dots" id="commDots" aria-hidden="true"></div>
             </div>
         </div>
     </section>
@@ -494,7 +504,7 @@
                         <li><a href="#about">About Us</a></li>
                         <li><a href="#portfolio">Portfolio</a></li>
                         <li><a href="#contact">Contact</a></li>
-                        <li><a href="#">Careers</a></li>
+                        <li><a href="#contact">Careers</a></li>
                     </ul>
                 </div>
 
@@ -510,7 +520,7 @@
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2025 Evenly Odd Films. All rights reserved.</p>
+                <p>&copy; 2026 Evenly Odd Films. All rights reserved.</p>
                 <div class="footer-right">
                     <a href="#" class="footer-link">Privacy Policy</a>
                     <a href="#" class="footer-link">Terms of Service</a>

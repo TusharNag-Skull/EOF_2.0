@@ -2611,3 +2611,182 @@ nav.navbar#navbar .nav-container .nav-logo > img.logo-img {
      .hamburger { display: flex; }
    We intentionally do NOT override .nav-menu on mobile so the existing dropdown + navDrop animation are preserved. */
 /* ===== END NAVBAR LAYOUT ===== */
+
+
+/* ===== PORTFOLIO TAB HIDDEN STATE (must win over per-grid !important rules) =====
+   Higher specificity (two classes) + !important ensures the .portfolio-grid-hidden
+   class from script.js:initPortfolioTabs() can actually hide the grid, even when
+   we set `display: grid/block !important` on the visible state below. */
+.films-grid.portfolio-grid-hidden,
+.commercials-grid.portfolio-grid-hidden,
+.commercials-carousel-wrapper.portfolio-grid-hidden {
+  display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+}
+
+/* ===== PORTFOLIO — CINEMATIC FILMS LAYOUT ===== */
+.films-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 20px !important;
+  padding: 20px 0 !important;
+}
+
+.films-grid .portfolio-item {
+  height: 420px !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  position: relative !important;
+  cursor: pointer !important;
+}
+
+.films-grid .portfolio-item .portfolio-img,
+.films-grid .portfolio-item img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  transition: transform 0.6s ease !important;
+}
+
+.films-grid .portfolio-item:hover img {
+  transform: scale(1.05) !important;
+}
+
+/* Title overlay at bottom of each film card */
+.films-grid .portfolio-item h3 {
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  padding: 40px 20px 20px !important;
+  background: linear-gradient(
+    transparent,
+    rgba(13, 12, 26, 0.95)
+  ) !important;
+  color: #FFF7E5 !important;
+  font-size: 1.3rem !important;
+  margin: 0 !important;
+  z-index: 2 !important;
+}
+
+@media (max-width: 768px) {
+  .films-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .films-grid .portfolio-item {
+    height: 280px !important;
+  }
+}
+/* ===== END CINEMATIC FILMS LAYOUT ===== */
+
+
+/* ===== PORTFOLIO — COMMERCIALS CAROUSEL ===== */
+/* The wrapper keeps class `commercials-grid` so the existing tab-switch JS
+   (script.js: querySelector('.commercials-grid')) keeps working untouched. */
+.commercials-carousel-wrapper {
+  position: relative !important;
+  overflow: hidden !important;
+  padding: 20px 0 60px !important;
+  display: block !important;
+  grid-template-columns: none !important;
+  gap: 0 !important;
+}
+
+.commercials-track {
+  display: flex !important;
+  gap: 20px !important;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+  will-change: transform !important;
+}
+
+.commercials-track .portfolio-item {
+  min-width: calc(33.333% - 14px) !important;
+  height: 380px !important;
+  flex-shrink: 0 !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  position: relative !important;
+  transition: transform 0.3s ease,
+              box-shadow 0.3s ease,
+              border-color 0.3s ease !important;
+}
+
+.commercials-track .portfolio-item.active-slide {
+  transform: scale(1.03) !important;
+  box-shadow: 0 0 30px rgba(253, 202, 45, 0.3) !important;
+  border: 1px solid rgba(253, 202, 45, 0.4) !important;
+}
+
+/* Carousel arrow buttons */
+.carousel-prev,
+.carousel-next {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  background: rgba(253, 202, 45, 0.15) !important;
+  border: 1px solid rgba(253, 202, 45, 0.4) !important;
+  color: #FDCA2D !important;
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 50% !important;
+  font-size: 20px !important;
+  cursor: pointer !important;
+  z-index: 10 !important;
+  transition: background 0.2s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.carousel-prev:hover,
+.carousel-next:hover {
+  background: rgba(253, 202, 45, 0.35) !important;
+}
+
+.carousel-prev {
+  left: -20px !important;
+}
+
+.carousel-next {
+  right: -20px !important;
+}
+
+/* Dot indicators */
+.carousel-dots {
+  display: flex !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  margin-top: 24px !important;
+}
+
+.carousel-dot {
+  width: 8px !important;
+  height: 8px !important;
+  border-radius: 50% !important;
+  background: rgba(253, 202, 45, 0.3) !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  padding: 0 !important;
+}
+
+.carousel-dot.active {
+  background: #FDCA2D !important;
+  width: 24px !important;
+  border-radius: 4px !important;
+}
+
+@media (max-width: 768px) {
+  .commercials-track .portfolio-item {
+    min-width: calc(85% - 10px) !important;
+    height: 260px !important;
+  }
+  .carousel-prev { left: 0 !important; }
+  .carousel-next { right: 0 !important; }
+}
+/* ===== END COMMERCIALS CAROUSEL ===== */

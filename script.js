@@ -1037,3 +1037,131 @@ document.addEventListener('DOMContentLoaded', () => {
 
 })();
 // ===== END JUGNU =====
+
+
+// ===== COMMERCIALS CAROUSEL =====
+(function () {
+
+  const track = document.getElementById('commercialsTrack');
+  const prevBtn = document.getElementById('commPrev');
+  const nextBtn = document.getElementById('commNext');
+  const dotsContainer = document.getElementById('commDots');
+
+  if (!track || !prevBtn || !nextBtn || !dotsContainer) return;
+
+  const cards = track.querySelectorAll('.portfolio-item');
+  if (cards.length === 0) return;
+
+  const GAP = 20;
+
+  const getVisible = () => (window.innerWidth <= 768 ? 1 : 3);
+
+  let currentIndex = 0;
+  let totalSlides = Math.ceil(cards.length / getVisible());
+
+  function isHidden() {
+    return !track.parentElement.offsetWidth;
+  }
+
+  function createDots() {
+    dotsContainer.innerHTML = '';
+    totalSlides = Math.ceil(cards.length / getVisible());
+    for (let i = 0; i < totalSlides; i++) {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'carousel-dot' + (i === currentIndex ? ' active' : '');
+      dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      dot.addEventListener('click', () => goTo(i));
+      dotsContainer.appendChild(dot);
+    }
+  }
+
+  function updateCarousel() {
+    if (isHidden()) return;
+
+    const visible = getVisible();
+    const wrapperWidth = track.parentElement.offsetWidth;
+    const cardSize = (wrapperWidth - GAP * (visible - 1)) / visible;
+    const offset = currentIndex * (cardSize + GAP) * visible;
+
+    track.style.transform = 'translateX(-' + offset + 'px)';
+
+    const dots = dotsContainer.querySelectorAll('.carousel-dot');
+    dots.forEach((d, i) => {
+      d.classList.toggle('active', i === currentIndex);
+    });
+
+    cards.forEach((card, i) => {
+      const centerCard = currentIndex * visible + Math.floor(visible / 2);
+      card.classList.toggle('active-slide', i === centerCard);
+    });
+  }
+
+  function clampIndex(index) {
+    totalSlides = Math.ceil(cards.length / getVisible());
+    return Math.max(0, Math.min(index, totalSlides - 1));
+  }
+
+  function goTo(index) {
+    if (isHidden()) return;
+    currentIndex = clampIndex(index);
+    updateCarousel();
+  }
+
+  function next() {
+    if (isHidden()) return;
+    totalSlides = Math.ceil(cards.length / getVisible());
+    currentIndex = currentIndex >= totalSlides - 1 ? 0 : currentIndex + 1;
+    updateCarousel();
+  }
+
+  function prev() {
+    if (isHidden()) return;
+    totalSlides = Math.ceil(cards.length / getVisible());
+    currentIndex = currentIndex <= 0 ? totalSlides - 1 : currentIndex - 1;
+    updateCarousel();
+  }
+
+  let touchStartX = 0;
+  track.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+  track.addEventListener('touchend', (e) => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) next(); else prev();
+    }
+  }, { passive: true });
+
+  prevBtn.addEventListener('click', prev);
+  nextBtn.addEventListener('click', next);
+
+  let autoPlay = setInterval(next, 4000);
+  track.addEventListener('mouseenter', () => clearInterval(autoPlay));
+  track.addEventListener('mouseleave', () => {
+    autoPlay = setInterval(next, 4000);
+  });
+
+  // Re-sync when the Commercials tab becomes visible again
+  document.querySelectorAll('.portfolio-tab').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      if (tab.dataset.tab === 'commercials') {
+        setTimeout(() => {
+          createDots();
+          updateCarousel();
+        }, 320);
+      }
+    });
+  });
+
+  createDots();
+  updateCarousel();
+
+  window.addEventListener('resize', () => {
+    createDots();
+    currentIndex = clampIndex(currentIndex);
+    updateCarousel();
+  });
+
+})();
+// ===== END COMMERCIALS CAROUSEL =====
