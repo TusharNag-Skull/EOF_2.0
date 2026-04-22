@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&display=swap');
 
 :root {
     --bg-1: #0D0C1A;
@@ -2790,3 +2790,58 @@ nav.navbar#navbar .nav-container .nav-logo > img.logo-img {
   .carousel-next { right: 0 !important; }
 }
 /* ===== END COMMERCIALS CAROUSEL ===== */
+
+/* ===== HERO BG VIDEO ===== */
+#hero-bg-video {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  opacity: 0.18 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  filter: brightness(0.7) saturate(0.8) !important;
+}
+
+/* Dark tint over the video for text legibility.
+   Uses the existing transparent .hero-overlay (z-index: 1),
+   so orbs (z:3), grain/stars (z:2), hero-content (z:120),
+   and the ::before drift sparkle (z:3) all remain untouched. */
+.hero-section .hero-overlay {
+  background: rgba(13, 12, 26, 0.65) !important;
+  pointer-events: none !important;
+}
+
+@media (max-width: 768px) {
+  #hero-bg-video {
+    opacity: 0.12 !important;
+  }
+}
+/* ===== END HERO BG VIDEO ===== */
+
+/* ===== FOOTER STARRY BACKGROUND ===== */
+footer, .footer {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* Star canvas behind footer content */
+#footer-stars-canvas {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+}
+
+/* All footer content above stars */
+footer > *:not(#footer-stars-canvas),
+.footer > *:not(#footer-stars-canvas) {
+  position: relative !important;
+  z-index: 1 !important;
+}
+/* ===== END FOOTER STARRY BACKGROUND ===== */

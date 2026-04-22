@@ -1,4 +1,4 @@
-﻿// ===== LOGO SCROLL INTRO =====
+// ===== LOGO SCROLL INTRO =====
 (function () {
 
     document.body.classList.add('intro-active');
@@ -1165,3 +1165,152 @@ document.addEventListener('DOMContentLoaded', () => {
 
 })();
 // ===== END COMMERCIALS CAROUSEL =====
+
+// ===== HERO BG VIDEO PLAY =====
+(function() {
+  const heroBgVid = document.getElementById('hero-bg-video');
+  if (!heroBgVid) return;
+
+  heroBgVid.muted = true;
+  heroBgVid.loop = true;
+  heroBgVid.playbackRate = 0.6;
+
+  heroBgVid.addEventListener('canplay', () => {
+    heroBgVid.play().catch(e => console.log(e));
+  });
+  heroBgVid.play().catch(e => console.log(e));
+
+  // Only play during Phase 1 (text phase)
+  // Pause during carousel (Phase 2)
+  const observer = new MutationObserver(() => {
+    const phase2Active = document.querySelector(
+      '.carousel-slide.active, .khaali-slide.visible'
+    );
+    if (phase2Active) {
+      heroBgVid.pause();
+    } else {
+      heroBgVid.play().catch(e => console.log(e));
+    }
+  });
+
+  const heroSection = document.querySelector('#hero, .hero-section');
+  if (heroSection) {
+    observer.observe(heroSection, {
+      attributes: true,
+      subtree: true,
+      attributeFilter: ['class']
+    });
+  }
+})();
+// ===== END HERO BG VIDEO PLAY =====
+
+// ===== FOOTER STARRY NIGHT =====
+(function() {
+
+  const footer = document.querySelector('footer, .footer');
+  if (!footer) return;
+
+  // Create canvas
+  const canvas = document.createElement('canvas');
+  canvas.id = 'footer-stars-canvas';
+  footer.insertBefore(canvas, footer.firstChild);
+
+  const ctx = canvas.getContext('2d');
+
+  // Resize canvas to footer size
+  function resizeCanvas() {
+    canvas.width = footer.offsetWidth;
+    canvas.height = footer.offsetHeight;
+    drawStars();
+  }
+
+  // Star data
+  const stars = [];
+  const STAR_COUNT = 180;
+
+  function createStars() {
+    stars.length = 0;
+    for (let i = 0; i < STAR_COUNT; i++) {
+      stars.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 1.5 + 0.3,
+        opacity: Math.random() * 0.8 + 0.2,
+        twinkleSpeed: 0.005 + Math.random() * 0.015,
+        twinkleOffset: Math.random() * Math.PI * 2,
+        // Some stars are gold, most are white
+        color: Math.random() > 0.75
+          ? `rgba(253,202,45,`
+          : Math.random() > 0.5
+            ? `rgba(255,247,229,`
+            : `rgba(223,232,247,`
+      });
+    }
+  }
+
+  // Draw all stars
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const time = Date.now() * 0.001;
+
+    stars.forEach(star => {
+      // Twinkle effect
+      const twinkle = Math.sin(
+        time * star.twinkleSpeed * 10 + star.twinkleOffset
+      );
+      const currentOpacity = star.opacity * (0.5 + twinkle * 0.5);
+
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+      ctx.fillStyle = star.color + currentOpacity + ')';
+      ctx.fill();
+
+      // Glow for brighter stars
+      if (star.radius > 1.2) {
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.radius * 2.5, 0, Math.PI * 2);
+        const gradient = ctx.createRadialGradient(
+          star.x, star.y, 0,
+          star.x, star.y, star.radius * 2.5
+        );
+        gradient.addColorStop(0, star.color + currentOpacity * 0.4 + ')');
+        gradient.addColorStop(1, star.color + '0)');
+        ctx.fillStyle = gradient;
+        ctx.fill();
+      }
+    });
+  }
+
+  // Animation loop
+  let animFrame;
+  function animate() {
+    drawStars();
+    animFrame = requestAnimationFrame(animate);
+  }
+
+  // Only animate when footer is visible
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animate();
+      } else {
+        cancelAnimationFrame(animFrame);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  observer.observe(footer);
+
+  // Init
+  resizeCanvas();
+  createStars();
+
+  // Handle resize
+  window.addEventListener('resize', () => {
+    resizeCanvas();
+    createStars();
+  });
+
+})();
+// ===== END FOOTER STARRY NIGHT =====
